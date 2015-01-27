@@ -30,12 +30,12 @@ import java.util.function.Function;
 
 import com.banjocreek.riverbed.builder.map.AbstractMutableMapBuilder;
 
-public abstract class AbstractMutableEntityBuilder<P, K, ENT extends AbstractEntity<K>, Z extends EntityBuilder<ENT, Z>>
-        extends AbstractMutableMapBuilder<K, Object, P> implements
+public abstract class AbstractMutableEntityBuilder<P, K, V, ENT extends AbstractEntity<K, V>, Z extends EntityBuilder<ENT, Z>>
+        extends AbstractMutableMapBuilder<K, V, P> implements
         EntityBuilder<ENT, Z> {
 
     protected AbstractMutableEntityBuilder(
-            final Function<Map<K, Object>, P> constructor) {
+            final Function<Map<K, V>, P> constructor) {
         super(constructor);
     }
 

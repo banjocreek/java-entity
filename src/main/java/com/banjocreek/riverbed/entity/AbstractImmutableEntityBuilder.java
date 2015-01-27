@@ -31,19 +31,19 @@ import java.util.function.Function;
 import com.banjocreek.riverbed.builder.map.AbstractImmutableMapBuilder;
 import com.banjocreek.riverbed.builder.map.MapDelta;
 
-public abstract class AbstractImmutableEntityBuilder<R, P, K, ENT extends AbstractEntity<K>, Z extends EntityBuilder<ENT, Z>>
-        extends AbstractImmutableMapBuilder<K, Object, R, P> implements
+public abstract class AbstractImmutableEntityBuilder<R, P, K, V, ENT extends AbstractEntity<K, V>, Z extends EntityBuilder<ENT, Z>>
+        extends AbstractImmutableMapBuilder<K, V, R, P> implements
         EntityBuilder<ENT, Z> {
 
     protected AbstractImmutableEntityBuilder(
-            final AbstractImmutableEntityBuilder<R, P, K, ENT, Z> previous,
-            final MapDelta<K, Object> delta) {
+            final AbstractImmutableEntityBuilder<R, P, K, V, ENT, Z> previous,
+            final MapDelta<K, V> delta) {
         super(previous, delta);
     }
 
     protected AbstractImmutableEntityBuilder(
-            final Function<Map<K, Object>, R> rootConstructor,
-            final Function<Map<K, Object>, P> parentConstructor) {
+            final Function<Map<K, V>, R> rootConstructor,
+            final Function<Map<K, V>, P> parentConstructor) {
         super(rootConstructor, parentConstructor);
     }
 

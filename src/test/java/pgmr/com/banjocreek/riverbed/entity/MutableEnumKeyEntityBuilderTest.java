@@ -57,7 +57,7 @@ public class MutableEnumKeyEntityBuilderTest {
     }
 
     static class Bldr extends
-            AbstractMutableEnumKeyEntityBuilder<Ent, Field, Ent, Bldr> {
+            AbstractMutableEnumKeyEntityBuilder<Ent, Field, Object, Ent, Bldr> {
 
         Bldr() {
             super(Field.class, Ent::new);
@@ -79,7 +79,7 @@ public class MutableEnumKeyEntityBuilderTest {
         }
     }
 
-    static class Ent extends AbstractEnumKeyEntity<Field> {
+    static class Ent extends AbstractEnumKeyEntity<Field, Object> {
 
         Ent(final Map<Field, Object> data) {
             super(data);

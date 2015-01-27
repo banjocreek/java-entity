@@ -29,11 +29,11 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 
-public abstract class AbstractEnumKeyEntity<K extends Enum<K>> {
+public abstract class AbstractEnumKeyEntity<K extends Enum<K>, V> {
 
-    protected final Map<K, Object> data;
+    protected final Map<K, V> data;
 
-    protected AbstractEnumKeyEntity(final Map<K, Object> data) {
+    protected AbstractEnumKeyEntity(final Map<K, ? extends V> data) {
 
         this.data = Collections.unmodifiableMap(new EnumMap<>(data));
 
@@ -47,7 +47,7 @@ public abstract class AbstractEnumKeyEntity<K extends Enum<K>> {
         }
 
         if (this.getClass().isInstance(obj)) {
-            return ((AbstractEnumKeyEntity<?>) obj).data.equals(this.data);
+            return ((AbstractEnumKeyEntity<?, ?>) obj).data.equals(this.data);
         }
 
         return false;
