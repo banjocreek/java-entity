@@ -108,7 +108,7 @@ public class EnumKeyEntityEqualityTest {
         });
     }
 
-    static class Ent extends AbstractEnumKeyEntity<Field> {
+    static class Ent extends AbstractEnumKeyEntity<Field, Object> {
 
         Ent(final Map<Field, Object> data) {
             super(data);

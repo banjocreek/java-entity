@@ -31,19 +31,19 @@ import java.util.function.Function;
 import com.banjocreek.riverbed.builder.enummap.AbstractImmutableEnumMapBuilder;
 import com.banjocreek.riverbed.builder.map.MapDelta;
 
-public abstract class AbstractImmutableEnumKeyEntityBuilder<R, P, K extends Enum<K>, ENT extends AbstractEnumKeyEntity<K>, Z extends EntityBuilder<ENT, Z>>
-        extends AbstractImmutableEnumMapBuilder<K, Object, R, P> implements
+public abstract class AbstractImmutableEnumKeyEntityBuilder<R, P, K extends Enum<K>, V, ENT extends AbstractEnumKeyEntity<K, V>, Z extends EntityBuilder<ENT, Z>>
+        extends AbstractImmutableEnumMapBuilder<K, V, R, P> implements
         EntityBuilder<ENT, Z> {
 
     protected AbstractImmutableEnumKeyEntityBuilder(
-            final AbstractImmutableEnumKeyEntityBuilder<R, P, K, ENT, Z> previous,
-            final MapDelta<K, Object> delta) {
+            final AbstractImmutableEnumKeyEntityBuilder<R, P, K, V, ENT, Z> previous,
+            final MapDelta<K, V> delta) {
         super(previous, delta);
     }
 
     protected AbstractImmutableEnumKeyEntityBuilder(final Class<K> keyType,
-            final Function<Map<K, Object>, R> rootConstructor,
-            final Function<Map<K, Object>, P> parentConstructor) {
+            final Function<Map<K, V>, R> rootConstructor,
+            final Function<Map<K, V>, P> parentConstructor) {
         super(keyType, rootConstructor, parentConstructor);
     }
 

@@ -30,12 +30,12 @@ import java.util.function.Function;
 
 import com.banjocreek.riverbed.builder.enummap.AbstractMutableEnumMapBuilder;
 
-public abstract class AbstractMutableEnumKeyEntityBuilder<P, K extends Enum<K>, ENT extends AbstractEnumKeyEntity<K>, Z extends EntityBuilder<ENT, Z>>
-        extends AbstractMutableEnumMapBuilder<K, Object, P> implements
+public abstract class AbstractMutableEnumKeyEntityBuilder<P, K extends Enum<K>, V, ENT extends AbstractEnumKeyEntity<K, V>, Z extends EntityBuilder<ENT, Z>>
+        extends AbstractMutableEnumMapBuilder<K, V, P> implements
         EntityBuilder<ENT, Z> {
 
     protected AbstractMutableEnumKeyEntityBuilder(final Class<K> keyType,
-            final Function<Map<K, Object>, P> constructor) {
+            final Function<Map<K, V>, P> constructor) {
         super(keyType, constructor);
     }
 

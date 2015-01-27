@@ -29,11 +29,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractEntity<K> {
+public abstract class AbstractEntity<K, V> {
 
-    protected final Map<K, Object> data;
+    protected final Map<K, V> data;
 
-    protected AbstractEntity(final Map<K, Object> data) {
+    protected AbstractEntity(final Map<? extends K, ? extends V> data) {
 
         this.data = Collections.unmodifiableMap(new HashMap<>(data));
 
@@ -47,7 +47,7 @@ public abstract class AbstractEntity<K> {
         }
 
         if (this.getClass().isInstance(obj)) {
-            return ((AbstractEntity<?>) obj).data.equals(this.data);
+            return ((AbstractEntity<?, ?>) obj).data.equals(this.data);
         }
 
         return false;
