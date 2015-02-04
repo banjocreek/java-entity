@@ -27,8 +27,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.banjocreek.riverbed.builder.map.MapDelta;
-import com.banjocreek.riverbed.entity.AbstractEnumKeyEntity;
-import com.banjocreek.riverbed.entity.AbstractImmutableEnumKeyEntityBuilder;
+import com.banjocreek.riverbed.entity.AbstractEntity;
+import com.banjocreek.riverbed.entity.AbstractImmutableEntityBuilder;
 
 public class ImmutableEntityBuilderTest {
 
@@ -56,12 +56,29 @@ public class ImmutableEntityBuilderTest {
 
     }
 
-    static class Bldr
-            extends
-            AbstractImmutableEnumKeyEntityBuilder<Ent, Ent, Field, Object, Ent, Bldr> {
+    /**
+     * Test fixed defaults dispatch bug.
+     */
+    @Test
+    public void testDefaultsAndValues() {
+
+        final Ent defs = this.builder.withA("DEFA").withB("DEFB").build();
+        final Ent vals = this.builder.withB("VB").withC("VC").build();
+
+        final Ent expected = this.builder.withA("DEFA").withB("VB").withC("VC")
+                .build();
+        final Ent actual = this.builder.withValues(vals).withDefaults(defs)
+                .build();
+
+        assertEquals(expected, actual);
+
+    }
+
+    static class Bldr extends
+            AbstractImmutableEntityBuilder<Ent, Ent, Field, Object, Ent, Bldr> {
 
         Bldr() {
-            super(Field.class, Ent::new, Ent::new);
+            super(Ent::new, Ent::new, Bldr::new);
         }
 
         Bldr(final Bldr previous, final MapDelta<Field, Object> delta) {
@@ -81,7 +98,7 @@ public class ImmutableEntityBuilderTest {
         }
     }
 
-    static class Ent extends AbstractEnumKeyEntity<Field, Object> {
+    static class Ent extends AbstractEntity<Field, Object> {
 
         Ent(final Map<Field, Object> data) {
             super(data);
