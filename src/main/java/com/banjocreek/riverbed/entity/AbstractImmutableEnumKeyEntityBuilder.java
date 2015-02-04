@@ -26,6 +26,8 @@
 package com.banjocreek.riverbed.entity;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import com.banjocreek.riverbed.builder.enummap.AbstractImmutableEnumMapBuilder;
@@ -35,32 +37,36 @@ public abstract class AbstractImmutableEnumKeyEntityBuilder<R, P, K extends Enum
         extends AbstractImmutableEnumMapBuilder<K, V, R, P> implements
         EntityBuilder<ENT, Z> {
 
+    private final BiFunction<? super Z, ? super MapDelta<K, V>, ? extends Z> nextConstructor;
+
     protected AbstractImmutableEnumKeyEntityBuilder(
             final AbstractImmutableEnumKeyEntityBuilder<R, P, K, V, ENT, Z> previous,
             final MapDelta<K, V> delta) {
         super(previous, delta);
+        this.nextConstructor = previous.nextConstructor;
     }
 
-    protected AbstractImmutableEnumKeyEntityBuilder(final Class<K> keyType,
+    protected AbstractImmutableEnumKeyEntityBuilder(
+            final Class<K> keyType,
             final Function<Map<K, V>, R> rootConstructor,
-            final Function<Map<K, V>, P> parentConstructor) {
+            final Function<Map<K, V>, P> parentConstructor,
+            final BiFunction<? super Z, ? super MapDelta<K, V>, ? extends Z> nextConstructor) {
         super(keyType, rootConstructor, parentConstructor);
+        this.nextConstructor = Objects.requireNonNull(nextConstructor);
     }
 
     @Override
     public final Z withDefaults(final ENT mdefs) {
-        defaults(mdefs.data);
         @SuppressWarnings("unchecked")
         final Z z = (Z) this;
-        return z;
+        return this.nextConstructor.apply(z, defaults(mdefs.data));
     }
 
     @Override
     public final Z withValues(final ENT mvals) {
-        defaults(mvals.data);
         @SuppressWarnings("unchecked")
         final Z z = (Z) this;
-        return z;
+        return this.nextConstructor.apply(z, values(mvals.data));
     }
 
 }

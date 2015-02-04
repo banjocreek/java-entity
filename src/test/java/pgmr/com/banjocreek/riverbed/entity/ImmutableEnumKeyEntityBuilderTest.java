@@ -56,12 +56,35 @@ public class ImmutableEnumKeyEntityBuilderTest {
 
     }
 
+    /**
+     * Test fixed defaults dispatch bug.
+     */
+    @Test
+    public void testDefaultsAndValues() {
+
+        final Ent defs = this.builder.withA("DEFA").withB("DEFB").build();
+        final Ent vals = this.builder.withB("VB").withC("VC").build();
+
+        final Ent expected = this.builder.withA("DEFA").withB("VB").withC("VC")
+                .build();
+
+        /*
+         * set values before defaults to check that they are going to the
+         * correct part of the accumulator.
+         */
+        final Ent actual = this.builder.withValues(vals).withDefaults(defs)
+                .build();
+
+        assertEquals(expected, actual);
+
+    }
+
     static class Bldr
             extends
             AbstractImmutableEnumKeyEntityBuilder<Ent, Ent, Field, Object, Ent, Bldr> {
 
         Bldr() {
-            super(Field.class, Ent::new, Ent::new);
+            super(Field.class, Ent::new, Ent::new, Bldr::new);
         }
 
         Bldr(final Bldr previous, final MapDelta<Field, Object> delta) {
