@@ -67,6 +67,11 @@ public class ImmutableEntityBuilderTest {
 
         final Ent expected = this.builder.withA("DEFA").withB("VB").withC("VC")
                 .build();
+
+        /*
+         * set values before defaults to check that they are going to the
+         * correct part of the accumulator.
+         */
         final Ent actual = this.builder.withValues(vals).withDefaults(defs)
                 .build();
 
