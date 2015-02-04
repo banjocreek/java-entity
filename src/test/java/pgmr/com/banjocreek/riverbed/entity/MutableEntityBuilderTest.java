@@ -26,8 +26,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.banjocreek.riverbed.entity.AbstractEnumKeyEntity;
-import com.banjocreek.riverbed.entity.AbstractMutableEnumKeyEntityBuilder;
+import com.banjocreek.riverbed.entity.AbstractEntity;
+import com.banjocreek.riverbed.entity.AbstractMutableEntityBuilder;
 
 public class MutableEntityBuilderTest {
 
@@ -56,11 +56,34 @@ public class MutableEntityBuilderTest {
 
     }
 
+    /**
+     * Test fixed defaults dispatch bug.
+     */
+    @Test
+    public void testDefaultsAndValues() {
+
+        final Ent defs = new Bldr().withA("DEFA").withB("DEFB").merge();
+        final Ent vals = new Bldr().withB("VB").withC("VC").merge();
+
+        final Ent expected = new Bldr().withA("DEFA").withB("VB").withC("VC")
+                .merge();
+
+        /*
+         * set values before defaults to check that they are going to the
+         * correct part of the accumulator.
+         */
+        final Ent actual = new Bldr().withValues(vals).withDefaults(defs)
+                .merge();
+
+        assertEquals(expected, actual);
+
+    }
+
     static class Bldr extends
-            AbstractMutableEnumKeyEntityBuilder<Ent, Field, Object, Ent, Bldr> {
+            AbstractMutableEntityBuilder<Ent, Field, Object, Ent, Bldr> {
 
         Bldr() {
-            super(Field.class, Ent::new);
+            super(Ent::new);
         }
 
         Bldr withA(final String v) {
@@ -79,7 +102,7 @@ public class MutableEntityBuilderTest {
         }
     }
 
-    static class Ent extends AbstractEnumKeyEntity<Field, Object> {
+    static class Ent extends AbstractEntity<Field, Object> {
 
         Ent(final Map<Field, Object> data) {
             super(data);
