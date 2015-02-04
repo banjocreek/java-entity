@@ -56,6 +56,26 @@ public class MutableEnumKeyEntityBuilderTest {
 
     }
 
+    @Test
+    public void testDefaultsAndValues() {
+
+        final Ent defs = new Bldr().withA("DEFA").withB("DEFB").merge();
+        final Ent vals = new Bldr().withB("VB").withC("VC").merge();
+
+        final Ent expected = new Bldr().withA("DEFA").withB("VB").withC("VC")
+                .merge();
+
+        /*
+         * set values before defaults to check that they are going to the
+         * correct part of the accumulator.
+         */
+        final Ent actual = new Bldr().withValues(vals).withDefaults(defs)
+                .merge();
+
+        assertEquals(expected, actual);
+
+    }
+
     static class Bldr extends
             AbstractMutableEnumKeyEntityBuilder<Ent, Field, Object, Ent, Bldr> {
 
