@@ -58,14 +58,14 @@ public abstract class AbstractImmutableEntityBuilder<R, P, K, V, ENT extends Abs
     public final Z withDefaults(final ENT mdefs) {
         @SuppressWarnings("unchecked")
         final Z z = (Z) this;
-        return this.nextConstructor.apply(z, defaults(mdefs.data));
+        return this.nextConstructor.apply(z, genDefaults(mdefs.data));
     }
 
     @Override
     public final Z withValues(final ENT mvals) {
         @SuppressWarnings("unchecked")
         final Z z = (Z) this;
-        return this.nextConstructor.apply(z, values(mvals.data));
+        return this.nextConstructor.apply(z, genValues(mvals.data));
     }
 
 }
