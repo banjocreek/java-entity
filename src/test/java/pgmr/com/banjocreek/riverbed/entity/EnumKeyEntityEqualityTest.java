@@ -37,7 +37,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.banjocreek.riverbed.entity.AbstractEnumKeyEntity;
+import com.banjocreek.riverbed.entity.AbstractEntity;
 
 public class EnumKeyEntityEqualityTest {
 
@@ -108,7 +108,7 @@ public class EnumKeyEntityEqualityTest {
         });
     }
 
-    static class Ent extends AbstractEnumKeyEntity<Field, Object> {
+    static class Ent extends AbstractEntity<Field, Object> {
 
         Ent(final Map<Field, Object> data) {
             super(data);
