@@ -41,7 +41,7 @@ public abstract class AbstractMutableEntityBuilder<P, K, V, ENT extends Abstract
 
     @Override
     public final Z withDefaults(final ENT mdefs) {
-        defaults(mdefs.data);
+        doDefaults(mdefs.data);
         @SuppressWarnings("unchecked")
         final Z z = (Z) this;
         return z;
@@ -49,7 +49,7 @@ public abstract class AbstractMutableEntityBuilder<P, K, V, ENT extends Abstract
 
     @Override
     public final Z withValues(final ENT mvals) {
-        values(mvals.data);
+        doValues(mvals.data);
         @SuppressWarnings("unchecked")
         final Z z = (Z) this;
         return z;

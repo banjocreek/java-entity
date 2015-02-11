@@ -91,15 +91,15 @@ public class ImmutableEntityBuilderTest {
         }
 
         Bldr withA(final String v) {
-            return new Bldr(this, values(Field.A, v));
+            return new Bldr(this, genValues(Field.A, v));
         }
 
         Bldr withB(final String v) {
-            return new Bldr(this, values(Field.B, v));
+            return new Bldr(this, genValues(Field.B, v));
         }
 
         Bldr withC(final String v) {
-            return new Bldr(this, values(Field.C, v));
+            return new Bldr(this, genValues(Field.C, v));
         }
     }
 

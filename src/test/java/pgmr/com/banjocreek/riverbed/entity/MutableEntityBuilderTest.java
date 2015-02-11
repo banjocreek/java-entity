@@ -87,17 +87,17 @@ public class MutableEntityBuilderTest {
         }
 
         Bldr withA(final String v) {
-            values(Field.A, v);
+            doValues(Field.A, v);
             return this;
         }
 
         Bldr withB(final String v) {
-            values(Field.B, v);
+            doValues(Field.B, v);
             return this;
         }
 
         Bldr withC(final String v) {
-            values(Field.C, v);
+            doValues(Field.C, v);
             return this;
         }
     }
